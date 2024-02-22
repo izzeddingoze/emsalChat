@@ -61,11 +61,7 @@ export default {
             publicMessages: {},
         }
     },
-    created() {
-        axios.get('/api/user').then(res => {
-
-        }).catch(() => {
-        })
+    created() {      
         this.getPublicMessages()
     },
     mounted() {

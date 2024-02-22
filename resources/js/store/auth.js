@@ -1,8 +1,9 @@
 import Vuex from 'vuex'
 import SWAlert from "sweetalert2";
+import router from "../router.js";
 
 const state = {
-    user: {},
+    user: null,
     authenticated: null
 }
 const getters = {
@@ -12,18 +13,24 @@ const getters = {
 
 const actions = {
     async authenticate({commit}) {
-        return axios.get('/api/user').then(res => {
-            commit('setAuthenticate', true)
-            commit('setUser', res.data.data)
-        })
+        if (!state.user)
+            return axios.get('/api/user').then(res => {
+                commit('setAuthenticate', true)
+                commit('setUser', res.data.data)
+            }).catch(err=>{
+
+            })
     },
     async login({commit, dispatch, state}, authData) {
 
-        await axios.post('/api/login', {...authData})
-            .then(async res => {
-                commit('setAuthenticate', true)
-                commit('setUser', res.data.data)
-            }).catch((err) => {
+        await axios.get('/sanctum/csrf-token').then(() => {
+            axios.post('/api/login', {...authData})
+                .then(async res => {
+                    commit('setAuthenticate', true)
+                    commit('setUser', res.data.data)
+                    router.push('/')
+                }).catch((err) => {
+                console.log(err)
                 SWAlert.fire({
                     icon: 'error',
                     title: 'Hata!',
@@ -34,6 +41,7 @@ const actions = {
                     text: "hata"
                 })
             })
+        })
     }
 
 }

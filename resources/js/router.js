@@ -24,22 +24,23 @@ export const router = new createRouter({
             component: Login,
             meta: {
                 title: "Giriş-EmsalChat",
-                middleware:null
+                middleware: null
             }
         },
     ]
 })
 
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+
     document.title = to.meta.title
     if (to.meta.middleware === "auth") {
-        if (authStore.getters.authenticated) {
-            next()
-        } else {
-            next({name: "login"})
-        }
-        next()
+
+        await authStore.dispatch('authenticate').then(r => {
+            if (authStore.getters.authenticated) next()
+            else next({name: "login"})
+
+        })
     } else next()
 })
 export default router

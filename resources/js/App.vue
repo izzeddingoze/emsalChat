@@ -10,12 +10,7 @@
 export default {
     name: "App",
     components: {},
-    mounted() {
 
-    },
-    created() {
-        this.$store.dispatch('authenticate')
-    }
 }
 </script>
 <style>
