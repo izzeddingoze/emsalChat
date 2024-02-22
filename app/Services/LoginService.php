@@ -7,6 +7,7 @@ use App\DTOs\ResultDTO;
 use App\Models\User;
 use App\Services\Interfaces\LoginServiceInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginService implements LoginServiceInterface
 {
@@ -26,9 +27,7 @@ class LoginService implements LoginServiceInterface
 
     public function logout(User $user): ResultDTO
     {
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
-        request()->session()->flush();
+        Session::flush();
         return ResultDTO::success('Çıkış başarılı!');
     }
 }

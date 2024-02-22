@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import SWAlert from "sweetalert2";
 
 export default {
     name: "Login",
@@ -66,22 +65,10 @@ export default {
 
     },
     methods: {
-        async login() {
-            await axios.post('/api/login', {...this.user})
-                .then(async res => {
-                    this.$router.push('/')
-                }).catch((err) => {
-                    SWAlert.fire({
-                        icon: 'error',
-                        title: 'Hata!',
-                        timer: 1500,
-                        timerProgressBar: true,
-                        position:'top',
-                        showConfirmButton:false,
-                        text: err.response.data.message
-                    })
-                })
-        }
+        async login(){
+            this.$store.dispatch('login',this.user)
+        },
+
     }
 }
 </script>

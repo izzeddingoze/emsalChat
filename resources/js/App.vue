@@ -12,6 +12,9 @@ export default {
     components: {},
     mounted() {
 
+    },
+    created() {
+        this.$store.dispatch('authenticate')
     }
 }
 </script>

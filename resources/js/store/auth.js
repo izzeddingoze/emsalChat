@@ -1,6 +1,9 @@
+import Vuex from 'vuex'
+import SWAlert from "sweetalert2";
+
 const state = {
     user: {},
-    authenticated: false
+    authenticated: null
 }
 const getters = {
     user: state => state.user,
@@ -10,14 +13,40 @@ const getters = {
 const actions = {
     async authenticate({commit}) {
         return axios.get('/api/user').then(res => {
-            commit('SET_AUTHENTICATED', true)
-            commit('SET_USER', res.data.data)
+            commit('setAuthenticate', true)
+            commit('setUser', res.data.data)
         })
+    },
+    async login({commit, dispatch, state}, authData) {
+
+        await axios.post('/api/login', {...authData})
+            .then(async res => {
+                commit('setAuthenticate', true)
+                commit('setUser', res.data.data)
+            }).catch((err) => {
+                SWAlert.fire({
+                    icon: 'error',
+                    title: 'Hata!',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    position: 'top',
+                    showConfirmButton: false,
+                    text: "hata"
+                })
+            })
     }
+
 }
 const mutations = {
-    SET_AUTHENTICATED: (state, value) => state.authanticated = value,
-    SET_USER: (state, value) => state.user = value,
+    setAuthenticate(state, value) {
+        state.authenticated = value
+    },
+    setUser(state, value) {
+        state.user = value
+    }
+
 }
 
-export default {state, getters, actions, mutations}
+const store = new Vuex.Store({state, getters, actions, mutations})
+
+export default store
