@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\Interfaces\LoginServiceInterface;
+use App\Services\Interfaces\MessageServiceInterface;
+use App\Services\LoginService;
+use App\Services\MessageService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        app()->bind(LoginServiceInterface::class, LoginService::class);
+        app()->bind(MessageServiceInterface::class, MessageService::class);
     }
 }
