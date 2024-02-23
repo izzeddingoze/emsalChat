@@ -1,17 +1,14 @@
 <template>
 
-    <div class="direct-chat-msg right" v-if="direction==='right'">
+    <div class="direct-chat-msg right mb-3" v-if="direction==='right'">
 
         <div class="direct-chat-infos clearfix">
-            <span class="direct-chat-name float-right rounded bg-info">{{ message.user.fullName }}</span>
-            <span class="direct-chat-timestamp float-left">{{ message.date }}</span>
+            <span class="direct-chat-name float-right rounded bg-primary px-4">{{ message.senderUser.fullName }}</span>
+            <span class="direct-chat-timestamp float-left" style="font-size: 12px">{{ message.createdAt }}</span>
         </div>
 
-        <span class="direct-chat-img bg-success text-center">
-            <i class="fas fa-user" style="font-size:35px"></i>
-        </span>
 
-        <div class="direct-chat-text">
+        <div class="bg-gradient-blue rounded p-2">
             {{ message.content }}
         </div>
 
@@ -19,13 +16,13 @@
     <div class="direct-chat-msg mb-3" v-else>
 
         <div class="direct-chat-infos clearfix">
-            <span class="direct-chat-name float-left rounded bg-success px-2">{{ message.senderUser.fullName }}</span>
+            <span class="direct-chat-name float-left rounded bg-success px-4">{{ message.senderUser.fullName }}</span>
             <span class="direct-chat-timestamp float-right" style="font-size: 12px">{{ message.createdAt }}</span>
         </div>
 
 
 
-        <div class="bg-success rounded p-2">
+        <div class="bg-gradient-success rounded p-2">
             {{ message.content }}
         </div>
 

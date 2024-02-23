@@ -6,9 +6,14 @@
                 <div class="card-header ui-sortable-handle">
                     <h3 class="card-title my-2">EmsalCHAT - Mesajlar</h3>
                     <div class="card-tools">
-                        <button type="button" class="btn my-2l" data-card-widget="remove" @click="logout">
-                            <i class="fas fa-times text-danger" style="font-size:15px"></i>
+
+                        <button type="button" class="btn my-2l  btn-light mr-2" data-card-widget="remove" @click="getPublicMessages">
+                            <i class="fas fa-sync-alt" style="font-size:15px"></i>
                         </button>
+                        <button type="button" class="btn btn-outline-danger my-2l" data-card-widget="remove" @click="logout">
+                            <i class="fas fa-times " style="font-size:15px"></i>
+                        </button>
+
                     </div>
                 </div>
 
@@ -17,6 +22,7 @@
                     <div  ref="messageContainer"  class="direct-chat-messages px-4" style="height:500px !important">
 
                         <Message v-for="publicMessage in this.publicMessages" :key="publicMessage.id"
+                                 :direction="publicMessage.senderUser.id===user.id ? 'right' : 'left'"
                                  :message="publicMessage"></Message>
 
                     </div>
@@ -48,10 +54,14 @@
 <script>
 import SWAlert from "sweetalert2";
 import Message from "../components/Message.vue";
+import {mapGetters} from "vuex";
 
 export default {
     name: "Messages",
     components: {Message},
+    computed:{
+        ...mapGetters(['user'])
+    },
     data() {
         return {
             newMessage: {
@@ -61,13 +71,14 @@ export default {
             publicMessages: {},
         }
     },
-    created() {      
+    created() {
         this.getPublicMessages()
     },
     mounted() {
 
     },
     methods: {
+
         resetNewMessage() {
             this.newMessage = {
                 messageContent: null,
@@ -76,8 +87,7 @@ export default {
         },
         scrollBottom(){
             let container = this.$refs.messageContainer;
-            console.log(container)
-            container.scrollTop = 500;
+
         },
         logout() {
             return axios.get('/api/logout').then(res => {

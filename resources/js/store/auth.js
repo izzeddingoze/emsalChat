@@ -16,10 +16,11 @@ const actions = {
         if (!state.user)
             return axios.get('/api/user').then(res => {
                 commit('setAuthenticate', true)
-                commit('setUser', res.data.data)
+                commit('setUser', res.data)
             }).catch(err=>{
 
             })
+
     },
     async login({commit, dispatch, state}, authData) {
 
