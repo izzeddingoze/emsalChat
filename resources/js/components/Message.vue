@@ -13,7 +13,7 @@
         </div>
 
     </div>
-    <div class="direct-chat-msg mb-3" v-else>
+    <div class="direct-chat-msg mb-3" v-else-if="direction==='left'">
 
         <div class="direct-chat-infos clearfix">
             <span class="direct-chat-name float-left rounded bg-success px-4">{{ message.senderUser.fullName }}</span>
@@ -25,6 +25,14 @@
         <div class="bg-gradient-success rounded p-2">
             {{ message.content }}
         </div>
+
+    </div>
+    <div class="direct-chat-msg mb-3" v-else>
+
+        <div class="direct-chat-infos clearfix">
+            <span class="direct-chat-timestamp float-right" style="font-size: 12px">{{ message.time }}</span>
+        </div>
+
 
     </div>
 </template>

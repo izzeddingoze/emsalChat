@@ -25,7 +25,7 @@ class MessageService implements MessageServiceInterface
             'to' => $messageDTO->to,
             'receiver_user_id' => $messageDTO->receiverUserId
         ]);
-        event(new NewMessage($message->sender_user_id, $message->content));
+        event(new NewMessage($message));
         return ResultDTO::success('Mesaj oluşturuldu!', new MessageResource($message));
     }
 

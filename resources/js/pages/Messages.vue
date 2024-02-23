@@ -7,10 +7,12 @@
                     <h3 class="card-title my-2">EmsalCHAT - Mesajlar</h3>
                     <div class="card-tools">
 
-                        <button type="button" class="btn my-2l  btn-light mr-2" data-card-widget="remove" @click="getPublicMessages">
+                        <button type="button" class="btn my-2l  btn-light mr-2" data-card-widget="remove"
+                                @click="getPublicMessages">
                             <i class="fas fa-sync-alt" style="font-size:15px"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-danger my-2l" data-card-widget="remove" @click="logout">
+                        <button type="button" class="btn btn-outline-danger my-2l" data-card-widget="remove"
+                                @click="logout">
                             <i class="fas fa-times " style="font-size:15px"></i>
                         </button>
 
@@ -19,7 +21,7 @@
 
                 <div class="card-body">
 
-                    <div  ref="messageContainer"  class="direct-chat-messages px-4" style="height:500px !important">
+                    <div ref="messageContainer" class="direct-chat-messages px-4" style="height:500px !important">
 
                         <Message v-for="publicMessage in this.publicMessages" :key="publicMessage.id"
                                  :direction="publicMessage.senderUser.id===user.id ? 'right' : 'left'"
@@ -59,7 +61,7 @@ import {mapGetters} from "vuex";
 export default {
     name: "Messages",
     components: {Message},
-    computed:{
+    computed: {
         ...mapGetters(['user'])
     },
     data() {
@@ -75,13 +77,18 @@ export default {
         this.getPublicMessages()
     },
     mounted() {
-        const channel = Echo.channel('emsalChatChannel')
-        channel.listen('newMessage',(event)=>{
-            console.log("mesaj geldi",event)
+
+        const channel = Echo.channel('emsalChat')
+        channel.listen('newMessage', (event) => {
+            alert("mesaj geldi")
+            if (this.user.id !== event.message.senderUser.id)
+                this.publicMessages.push(event.message)
         })
 
-        channel.listen('.newMessage',(event)=>{
-            console.log("mesaj geldi",event)
+        channel.listen('timeReminder', (event) => {
+            let currentTime = new Date();
+            let formattedTime = currentTime.toLocaleString();
+            this.publicMessages.push({'time': formattedTime})
         })
 
     },
@@ -93,7 +100,7 @@ export default {
                 to: 'public'
             }
         },
-        scrollBottom(){
+        scrollBottom() {
             let container = this.$refs.messageContainer;
 
         },
