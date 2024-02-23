@@ -42,7 +42,7 @@ class TimeReminder
     public function broadcastWith(): array
     {
         return [
-            'message' => new MessageResource($this->message),
+
         ];
     }
 }

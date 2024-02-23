@@ -79,6 +79,7 @@ export default {
     mounted() {
 
         const channel = Echo.channel('emsalChat')
+
         channel.listen('newMessage', (event) => {
             alert("mesaj geldi")
             if (this.user.id !== event.message.senderUser.id)
