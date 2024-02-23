@@ -6,6 +6,7 @@ use App\DTOs\LoginUserDTO;
 use App\DTOs\MessageDTO;
 use App\DTOs\ResultDTO;
 use App\Enums\MessagesTo;
+use App\Events\NewMessage;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use App\Models\User;
@@ -24,6 +25,7 @@ class MessageService implements MessageServiceInterface
             'to' => $messageDTO->to,
             'receiver_user_id' => $messageDTO->receiverUserId
         ]);
+        event(new NewMessage($message->sender_user_id, $message->content));
         return ResultDTO::success('Mesaj oluşturuldu!', new MessageResource($message));
     }
 

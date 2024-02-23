@@ -21,19 +21,19 @@ class UsersTableSeeder extends Seeder
                     "name" => 'Ahmet',
                     "surname" => 'Yılmaz',
                     "email" => 'ahmet@mail.com',
-                    "password" => Hash::make('abcd1234'),
+                    "password" => Hash::make('123456'),
                 ],
                 [
                     "name" => 'Mehmet',
                     "surname" => 'Yılmaz',
                     "email" => 'mehmet@mail.com',
-                    "password" => Hash::make('abcd1234'),
+                    "password" => Hash::make('123456'),
                 ],
                 [
                     "name" => 'Yılmaz',
                     "surname" => 'Mehmet',
                     "email" => 'yilmaz@mail.com',
-                    "password" => Hash::make('abcd1234'),
+                    "password" => Hash::make('123456'),
                 ]
             ]
         );

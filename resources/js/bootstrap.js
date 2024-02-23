@@ -32,3 +32,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+
+import Echo from 'laravel-echo';
+import pusher from 'pusher-js'
+
+window.Pusher = pusher;
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: "0f9d90192693f61508c0",
+    cluster: "eu",
+    forceTLS: true
+});

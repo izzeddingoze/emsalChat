@@ -75,6 +75,14 @@ export default {
         this.getPublicMessages()
     },
     mounted() {
+        const channel = Echo.channel('emsalChatChannel')
+        channel.listen('newMessage',(event)=>{
+            console.log("mesaj geldi",event)
+        })
+
+        channel.listen('.newMessage',(event)=>{
+            console.log("mesaj geldi",event)
+        })
 
     },
     methods: {
