@@ -80,13 +80,13 @@ export default {
 
         const channel = Echo.channel('emsalChat')
 
-        channel.listen('newMessage', (event) => {
-            alert("mesaj geldi")
-            if (this.user.id !== event.message.senderUser.id)
+        channel.listen('.newMessage', (event) => {
+            alert(". mesaj geldi")
+
                 this.publicMessages.push(event.message)
         })
 
-        channel.listen('timeReminder', (event) => {
+        channel.listen('.timeReminder', (event) => {
             let currentTime = new Date();
             let formattedTime = currentTime.toLocaleString();
             this.publicMessages.push({'time': formattedTime})
@@ -126,7 +126,6 @@ export default {
             }
 
             await axios.post('/api/new-message', {...this.newMessage}).then(async res => {
-                this.publicMessages.push(res.data.data)
                 this.resetNewMessage()
                 this.scrollBottom()
 
