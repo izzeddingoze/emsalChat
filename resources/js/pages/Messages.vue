@@ -81,8 +81,6 @@ export default {
         const channel = Echo.channel('emsalChat')
 
         channel.listen('.newMessage', (event) => {
-            alert(". mesaj geldi")
-
                 this.publicMessages.push(event.message)
         })
 
